@@ -10,18 +10,26 @@ function importComponent(path){
 const router = new VueRouter({
     mode: "history",
     routes: [
-        //Login Page
+        //Beranda
         {
-            path: "/login",
-            name: "Login",
-            component: importComponent("LoginPage"),
-        },
-        //Register Page
-        {
-            path: "/register",
-            name: "Register",
-            component: importComponent("RegisterPage"),
-        },
+            path: "/beranda",
+            name: "beranda",
+            component: importComponent("Beranda"),
+            children: [
+                //Login Page
+                {
+                    path: "/login",
+                    name: "Login",
+                    component: importComponent("LoginPage"),
+                },
+                //Register Page
+                {
+                    path: "/register",
+                    name: "Register",
+                    component: importComponent("RegisterPage"),
+                },
+            ]
+        }
         //Dashboard Page
         {
             path: "/",
