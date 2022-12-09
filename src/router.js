@@ -12,7 +12,7 @@ const router = new VueRouter({
     routes: [
         //Beranda
         {
-            path: "/beranda",
+            path: "/",
             name: "beranda",
             component: importComponent("Beranda"),
             children: [
@@ -31,7 +31,7 @@ const router = new VueRouter({
             ]
         },
         //Dashboard Page
-        {
+    /*    {
             path: "/",
             name: "admin",
             component: importComponent("DashboardPage"),
@@ -43,7 +43,7 @@ const router = new VueRouter({
                     component: importComponent("DashboardIndex"),
                 },
             ],
-        },
+        }, */
     ],
 });
 
