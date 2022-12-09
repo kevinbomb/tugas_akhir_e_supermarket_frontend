@@ -29,7 +29,7 @@ const router = new VueRouter({
                     component: importComponent("RegisterPage"),
                 },
             ]
-        }
+        },
         //Dashboard Page
         {
             path: "/",
@@ -42,6 +42,7 @@ const router = new VueRouter({
                     name: "Root",
                     component: importComponent("DashboardIndex"),
                 },
+            ],
         },
     ],
 });
