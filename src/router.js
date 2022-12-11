@@ -12,17 +12,29 @@ const router = new VueRouter({
         {
             path: '/beranda',
             name: 'beranda',
-            component: () => import('@/components/DashboardLayout.vue'),
-            children:[
-                {
-                    // path: "/beranda",
-                    // name: "beranda.index",
-                    // component: () => import('@/components/Beranda.vue'),
-                },
-            ], 
+            component: () => import('@/components/BerandaPage.vue'),
+            // children:[
+            //     {
+            //         path: "/login",
+            //         name: "login",
+            //         component: () => import('@/components/LoginPage.vue'),
+            //     },
+            // ], 
         },
 
-        
+         //Beranda
+         {
+            path: '/login',
+            name: 'login',
+            component: () => import('@/components/LoginPage.vue'),
+            // children:[
+            //     {
+            //         path: "/login",
+            //         name: "login",
+            //         component: () => import('@/components/LoginPage.vue'),
+            //     },
+            // ], 
+        },
 
         {
             path: '/',
@@ -32,12 +44,9 @@ const router = new VueRouter({
 });
 
 //Set Judul & Router pertama kali web dibuka
-// router.beforeEach((to, from, next) => {
-//     document.title = to.meta.title;
-//     if(to.name !== 'Login' && localStorage.getItem("token")===null && to.name !== 'Register'){
-//         next({ name: 'Login'});
-//     }else next();
-// });
+router.beforeEach((to, from, next) => {
+    next();
+});
 
 // router.beforeEnter((to, from, next) => {
 //     document.title = to.meta.title;
