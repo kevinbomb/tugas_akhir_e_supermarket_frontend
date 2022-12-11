@@ -3,48 +3,47 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-function importComponent(path){
-    return () => import(`./components/${path}.vue`);
-}
 
 const router = new VueRouter({
     mode: "history",
     routes: [
+        
         //Beranda
         {
-            path: "/",
-            name: "beranda",
-            component: importComponent("Beranda"),
-            children: [
-                //Login Page
+            path: '/beranda',
+            name: 'beranda',
+            component: () => import('@/components/DashboardLayout.vue'),
+            children:[
                 {
-                    path: "/login",
-                    name: "Login",
-                    component: importComponent("LoginPage"),
+                    // path: "/beranda",
+                    // name: "beranda.index",
+                    // component: () => import('@/components/Beranda.vue'),
                 },
-                //Register Page
-                {
-                    path: "/register",
-                    name: "Register",
-                    component: importComponent("RegisterPage"),
-                },
-            ]
+            ], 
         },
-        //Dashboard Page
-    /*    {
-            path: "/",
-            name: "admin",
-            component: importComponent("DashboardPage"),
-            children: [
-                //Dashboard
-                {
-                    path: "/",
-                    name: "Root",
-                    component: importComponent("DashboardIndex"),
-                },
-            ],
-        }, */
+
+        
+
+        {
+            path: '/',
+            redirect: '/beranda'
+        },
     ],
 });
+
+//Set Judul & Router pertama kali web dibuka
+// router.beforeEach((to, from, next) => {
+//     document.title = to.meta.title;
+//     if(to.name !== 'Login' && localStorage.getItem("token")===null && to.name !== 'Register'){
+//         next({ name: 'Login'});
+//     }else next();
+// });
+
+// router.beforeEnter((to, from, next) => {
+//     document.title = to.meta.title;
+//     if(to.name !== 'Login' && localStorage.getItem("token")===null && to.name !== 'Register'){
+//         next({ name: 'Login'});
+//     }else next();
+// });
 
 export default router;
