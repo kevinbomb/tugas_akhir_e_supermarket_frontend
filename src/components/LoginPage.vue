@@ -4,13 +4,13 @@
             <v-img src="@/assets/troli.png" max-height="25" max-width="25"></v-img>
             <h3>Minnie Market</h3>
         </v-toolbar> -->
-        <div class="background">
+        
             <img src="@/assets/background1.jpg" class="gambar" >
-        </div>
+        
         <v-container fluid fill-height class="posisiCard">
             <v-layout flex align-center justify-center>
                 <v-flex xs12 sm4 elevation-6>
-                    <v-toolbar class="pink darken-3">
+                    <v-toolbar class="black">
                         <v-toolbar-title class="white--text">
                             <h2>Login</h2>
                         </v-toolbar-title>
@@ -20,10 +20,9 @@
                             <div>
                                 <v-form v-model="valid" ref="form">
                                     <v-text-field label="E-mail" v-model="email" :rules="emailRules" required></v-text-field>
-                                    <v-text-field label="Password" v-model="password" type="password" min="8" :rules="passwordRules" counter required>
-                                    </v-text-field>
+                                    <v-text-field label="Password" v-model="password" type="password" min="8" :rules="passwordRules" counter required></v-text-field>
                                     <v-layout justify-center>
-                                        <v-btn  class="mr-2" @click="submit" :class="{ 'green darken-1 white--text' :valid, disabled: !valid }">Login</v-btn>
+                                        <v-btn  class="red darken-1 white--text" @click="submit">Login</v-btn>
                                     </v-layout>
                                 </v-form>
                                 <h5 class="posisi">Belum punya akun?</h5>
@@ -55,19 +54,14 @@
         margin-top: 20px;
     }
 
-    .background{
-        position: relative;
-        display: inline-block;
-    }
-
     .gambar{
-    /* Set up proportionate scaling */
-    width: 1600px;
-    height: auto;
-        
-    /* Set up positioning */
-    top: 0;
-    left: 0;
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+            
+        /* Preserve aspet ratio */
+        min-width: 100%;
+        min-height: 100%;
     }
 
 </style>
@@ -112,12 +106,8 @@ export default {
                     this.load = false;
                     this.clear();
                     // this.$store.commit("setAuthentication", true);
-                    if(response.data.user.id === 1){
-                        this.$router.push({ name: "Produk",})
-                    }
-                    else if(response.data.user.id !== 1){
-                        this.$router.push({ name: "Home",})
-                    }
+                    this.$router.push({ name: "beranda",})
+                    
                 }).catch(error => {
                     this.error_message = error.response.data.message;
                     this.color = "red";

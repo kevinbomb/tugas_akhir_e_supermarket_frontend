@@ -13,27 +13,24 @@ const router = new VueRouter({
             path: '/beranda',
             name: 'beranda',
             component: () => import('@/components/BerandaPage.vue'),
-            // children:[
-            //     {
-            //         path: "/login",
-            //         name: "login",
-            //         component: () => import('@/components/LoginPage.vue'),
-            //     },
-            // ], 
+            children:[
+                {
+                    path: "/supplier",
+                    name: "supplier.index",
+                    component: () => import('@/views/Supplier/SupplierPage.vue'),
+                },
+            ], 
         },
 
-         //Beranda
-         {
+        {
             path: '/login',
-            name: 'login',
+            name: 'LoginPage',
             component: () => import('@/components/LoginPage.vue'),
-            // children:[
-            //     {
-            //         path: "/login",
-            //         name: "login",
-            //         component: () => import('@/components/LoginPage.vue'),
-            //     },
-            // ], 
+        },
+        {
+            path: '/register',
+            name: 'RegisterPage',
+            component: () => import('@/components/RegisterPage.vue'),
         },
 
         {
