@@ -10,9 +10,9 @@ const router = new VueRouter({
         
         //Beranda
         {
-            path: '/beranda',
-            name: 'beranda',
-            component: () => import('@/components/BerandaPage.vue'),
+            path: '/dashboard',
+            name: 'Dashboard',
+            component: () => import('@/components/DashboardLayout.vue'),
             children:[
                 {
                     path: "/supplier",
@@ -31,6 +31,11 @@ const router = new VueRouter({
             path: '/register',
             name: 'RegisterPage',
             component: () => import('@/components/RegisterPage.vue'),
+        },
+        {
+            path: '/beranda',
+            name: 'Beranda',
+            component: () => import('@/components/BerandaPage.vue'),
         },
 
         {
