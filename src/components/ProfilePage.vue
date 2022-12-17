@@ -56,7 +56,7 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                     <div class="card-body text-center" style="background-color: #212529; color: aliceblue;" >
-                        <img :src=profile.img alt="avatar"
+                        <img :src=profile.img alt="AVATAR"
                         class="rounded-circle img-fluid" style="width: 150px;">
                         <br>
                         <br>

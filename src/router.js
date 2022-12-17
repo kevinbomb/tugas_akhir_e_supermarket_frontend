@@ -10,9 +10,9 @@ const router = new VueRouter({
         
         //Beranda
         {
-            path: '/dashboard',
-            name: 'Dashboard',
-            component: () => import('@/components/DashboardLayout.vue'),
+            path: '/beranda',
+            name: 'beranda',
+            component: () => import('@/components/BerandaPage.vue'),
             children:[
                 {
                     path: "/supplier",
