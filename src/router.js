@@ -19,6 +19,16 @@ const router = new VueRouter({
                     name: "supplier.index",
                     component: () => import('@/views/Supplier/SupplierPage.vue'),
                 },
+                {
+                    path: "/user",
+                    name: "user.index",
+                    component: () => import('@/views/User/UserPage.vue'),
+                },
+                {
+                    path: "/profile",
+                    name: "myprofile",
+                    component: () => import('@/components/ProfilePage.vue'),
+                },
             ], 
         },
 
@@ -32,10 +42,20 @@ const router = new VueRouter({
             name: 'RegisterPage',
             component: () => import('@/components/RegisterPage.vue'),
         },
+        {
+            path: '/tes1',
+            name: 'DashboardIndex',
+            component: () => import('@/components/DashboardIndex.vue'),
+        },
+        {
+            path: '/tes2',
+            name: 'DashboardLayout',
+            component: () => import('@/components/DashboardLayout.vue'),
+        },
 
         {
             path: '/',
-            redirect: '/beranda'
+            redirect: '/login'
         },
     ],
 });

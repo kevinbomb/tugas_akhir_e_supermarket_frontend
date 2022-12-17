@@ -4,8 +4,10 @@
         <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
             <p class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Minnie Market</p>
             <h1 style="color: crimson;">Welcome {{ name }} !!</h1>     
-            <v-btn class="ma-2" @click="logout" outlined small color="error" ><v-icon>mdi-logout</v-icon></v-btn>
-            <!-- <v-btn color="error" dark @click="dialog = true"> Log Out </v-btn> -->
+            <v-btn class="mr-16" @click="myprofile" fab absolute right color="red darken-2"><v-icon color="black">mdi-account</v-icon>
+                
+            </v-btn>
+            <v-btn class="mx-2" @click="logout" outlined small color="red darken-2" ><v-icon>mdi-logout</v-icon></v-btn>
         </header>
         
         <div class="container-fluid">
@@ -13,8 +15,11 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
+                        <li v-if="name=='Super Admin'" class="nav-item">
                             <router-link :to="{name: 'supplier.index'}" class="nav-link">Supplier</router-link>
+                        </li>
+                        <li v-if="name=='Super Admin'" class="nav-item">
+                            <router-link :to="{name: 'user.index'}" class="nav-link">Member</router-link>
                         </li>
                     </ul>
                 </div>
@@ -38,6 +43,9 @@
                 this.$router.push({
                     name: 'LoginPage',
                 });
+            },
+            myprofile(){
+                this.$router.push({ name: "myprofile",})
             }
         },
 

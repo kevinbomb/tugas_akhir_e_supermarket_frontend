@@ -1,7 +1,7 @@
 <template>
     <section>
         <v-main class="list">
-            <h3 class="text-h3" font-weight-medium mb-5>Supplier</h3>
+            <h3 class="text-h3" font-weight-medium mb-5>Member List</h3>
 
             <v-card>
                 <v-card-title>
@@ -17,7 +17,11 @@
                     <v-btn color="success" dark @click="dialog = true"> Tambah </v-btn>
                 </v-card-title>
 
-                <v-data-table :headers="headers" :items="suppliers" :search="search">
+                <v-data-table :headers="headers" :items="users" :search="search">
+                    <template v-slot:[`item.status`]="{ item }">    
+                        <p v-if="item.is_active===1">Authenticated</p>
+                        <p v-else>Unauthenticated</p>
+                    </template>
                     <template v-slot:[`item.actions`]="{ item }">    
                         
                         <v-btn class="ma-2" outlined small color="success" @click="editHandler(item)">EDIT</v-btn>
@@ -29,25 +33,25 @@
             <v-dialog v-model="dialog" persistent max-width="600px">
                 <v-card>
                     <v-card-title>
-                        <span class="headline">{{ formTitle }} Supplier</span>
+                        <span class="headline">{{ formTitle }} Member</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-text-field
-                                v-model="form.nama"
-                                label="Nama Suppplier"
+                                v-model="form.name"
+                                label="Name"
                                 required
                             >
                             </v-text-field>
                             <v-text-field
-                                v-model="form.alamat"
-                                label="Alamat"
+                                v-model="form.username"
+                                label="Username"
                                 required
                             >
                             </v-text-field>
                             <v-text-field
-                                v-model="form.deskripsi"
-                                label="Deskripsi"
+                                v-model="form.email"
+                                label="E-mail"
                                 required
                             >
                             </v-text-field>
@@ -67,7 +71,7 @@
                     <v-card-title>
                         <span class="headline"> Warning!</span>
                     </v-card-title>
-                    <v-card-text>Anda yakin ingin menghapus Supplier ini?</v-card-text>
+                    <v-card-text>Anda yakin ingin menghapus Data User ini?</v-card-text>
                     <v-card-action>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="dialogConfirm = false"> Cancel </v-btn>
@@ -83,7 +87,7 @@
 
 <script>
 export default {
-    name: "ListItem",
+    name: "ListUser",
     data() {
         return{
             inputType: 'Tambah',
@@ -96,21 +100,22 @@ export default {
             dialogConfirm: false,
             headers: [
                 {
-                    text: "Nama Supplier",
+                    text: "Username",
                     align: "start",
                     sortable: true,
-                    value: "nama_supplier",
+                    value: "username",
                 },
-                { text: "Alamat", value: "alamat_supplier" },
-                { text: "Deskripsi", value: "deskripsi" },
+                { text: "Name", value: "name" },
+                { text: "E-mail", value: "email" },
+                { text: "Status", value: "status"},
                 { text: "Actions", value: "actions"},
             ],
-            supplier: new FormData,
-            suppliers: [],
+            user: new FormData,
+            users: [],
             form: {
-                nama: null,
-                alamat: null,
-                deskripsi: null,
+                name: null,
+                username: null,
+                email: null,
             },
             deleteId: '',
             editId: '',
@@ -127,24 +132,24 @@ export default {
         },
         //Read Data Courses
         readData(){
-            var url = this.$api + '/suppliers';
+            var url = this.$api + '/users';
             this.$http.get(url, {
                 headers: {
                     'Authorization' : 'Bearer ' + localStorage.getItem('token')
                 }
             }).then(response => {
-                this.suppliers = response.data.data;
+                this.users = response.data.data;
             })
         },
         //Simpan data Course
         save(){
-            this.supplier.append('nama_supplier', this.form.nama);
-            this.supplier.append('alamat_supplier', this.form.alamat);
-            this.supplier.append('deskripsi', this.form.deskripsi);
+            this.user.append('name', this.form.name);
+            this.user.append('username', this.form.username);
+            this.user.append('email', this.form.email);
 
-            var url = this.$api + '/suppliers'
+            var url = this.$api + '/users'
             this.load = true;
-            this.$http.post(url, this.supplier, {
+            this.$http.post(url, this.user, {
                 headers: {
                     'Authorization' : 'Bearer ' + localStorage.getItem('token'),
                 }
@@ -166,11 +171,11 @@ export default {
         //Ubah data Course
         update() {
             let newData = {
-                nama_supplier: this.form.nama,
-                alamat_supplier: this.form.alamat,
-                deskripsi: this.form.deskripsi
+                name: this.form.name,
+                username: this.form.username,
+                email: this.form.email
             };
-            var url = this.$api + '/suppliers/' + this.editId;
+            var url = this.$api + '/users/' + this.editId;
             this.load = true;
             this.$http.put(url, newData, {
                 headers: {
@@ -195,7 +200,7 @@ export default {
         //Hapud Course
         deleteData() {
             //menghapus data
-            var url = this.$api + '/suppliers/' + this.deleteId;
+            var url = this.$api + '/users/' + this.deleteId;
             this.load = true;
             this.$http.delete(url, {
                 headers: {
@@ -219,9 +224,10 @@ export default {
         },editHandler(item) {
             this.inputType = 'Ubah';
             this.editId = item.id;
-            this.form.nama = item.nama_supplier;
-            this.form.alamat = item.alamat;
-            this.form.deskripsi = item.deskripsi;
+            this.form.name = item.name;
+            this.form.username = item.username;
+            this.form.email = item.email;
+            this.form.gambar = item.gambar;
             this.dialog = true;
         },
         deleteHandler(id) {
@@ -243,9 +249,9 @@ export default {
         },
         resetForm() {
             this.form = {
-                nama: null,
-                alamat: null,
-                deskripsi: null
+                name: null,
+                username: null,
+                email: null
             };
         },
     },
