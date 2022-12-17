@@ -47,11 +47,6 @@ const router = new VueRouter({
             name: 'DashboardIndex',
             component: () => import('@/components/DashboardIndex.vue'),
         },
-        {
-            path: '/tes2',
-            name: 'DashboardLayout',
-            component: () => import('@/components/DashboardLayout.vue'),
-        },
 
         {
             path: '/',
