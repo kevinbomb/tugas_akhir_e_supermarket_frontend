@@ -35,6 +35,12 @@
 
 <script>
     export default {
+        data(){
+            return{
+                name:'',                
+            }
+
+        },
         methods:{
             logout(){
                 localStorage.removeItem("token");
@@ -49,8 +55,24 @@
             }
         },
 
+        computed:{
+            getName(){
+                return localStorage.getItem('name')
+            }
+        },
+
+        watch:{
+            name(){
+                console.log(this.name)
+                if(this.name!=this.getName()){
+                    console.log(this.name,'sda')
+                    this.name=this.getName()
+                }
+            }
+        },
+
         beforeMount(){
-                this.name = localStorage.getItem('name');
+            this.name = localStorage.getItem('name');
         }
     }
 </script>

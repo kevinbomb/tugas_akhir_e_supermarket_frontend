@@ -192,7 +192,7 @@ export default {
                 this.load = false;
             });
         },
-        //Hapud Course
+        //Hapus Course
         deleteData() {
             //menghapus data
             var url = this.$api + '/suppliers/' + this.deleteId;
@@ -220,7 +220,7 @@ export default {
             this.inputType = 'Ubah';
             this.editId = item.id;
             this.form.nama = item.nama_supplier;
-            this.form.alamat = item.alamat;
+            this.form.alamat = item.alamat_supplier;
             this.form.deskripsi = item.deskripsi;
             this.dialog = true;
         },

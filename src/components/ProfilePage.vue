@@ -61,7 +61,8 @@
                         <br>
                         <br>
                         <div class="d-flex justify-content-center mb-2">
-                        <button type="button" class="btn btn-danger ms-1" style="color: black;" >Edit Profile</button>
+                        <button v-if="profile.name==='Super Admin'" type="button" @click="editHandler(profile)" class="btn btn-danger ms-1" disabled style="color: black;" >Edit Profile</button>
+                        <button v-else type="button" @click="editHandler(profile)" class="btn btn-danger ms-1" style="color: black;" >Edit Profile</button>
                         </div>
                     </div>
                     </div>
@@ -102,7 +103,7 @@
                             <p class="mb-0">Status</p>
                         </div>
                         <div class="col-sm-9">
-                            <p v-if="profile.status===1" class="mb-0">Authenticated</p>
+                            <p v-if="profile.is_active===1" class="mb-0">Authenticated</p>
                             <p v-else class="mb-0">Unauthenticated</p>
                         </div>
                         </div>
@@ -112,6 +113,48 @@
                 </div>
             </div>
         </div>
+
+        <v-dialog v-model="dialog" persistent max-width="600px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">{{ formTitle }} Supplier</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field
+                                v-model="form.name"
+                                label="Name"
+                                required
+                            >
+                            </v-text-field>
+                            <v-text-field
+                                v-model="form.username"
+                                label="Username"
+                                required
+                            >
+                            </v-text-field>
+                            <v-text-field
+                                v-model="form.email"
+                                label="E-Mail"
+                                required
+                            >
+                            </v-text-field>
+                            <v-text-field
+                                v-model="form.img"
+                                label="URL Gambar"
+                            >
+                            </v-text-field>
+                            
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="cancel"> Cancel </v-btn>
+                        <v-btn color="blue darken-1" text @click="update"> Save </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
     </section>
 </template>
 
@@ -120,7 +163,21 @@ export default{
     name: "ProfilePage",
     data() {
         return{
+            load: false,
+            snackbar: false,
+            error_message: '',
+            color: '',
             profile: [],
+            updet: new FormData,
+            dialog: false,
+            editId: '',
+            form: {
+                name: null,
+                username: null,
+                email: null,
+                img: null,
+            },
+
         };
     },
 
@@ -135,7 +192,62 @@ export default{
             }).then(response => {
                 this.profile = response.data.data;
             })
+        },editHandler(item) {
+            this.editId = item.id;
+            this.form.name = item.name;
+            this.form.username = item.username;
+            this.form.email = item.email;
+            this.form.img = item.img;
+            this.dialog = true;
         },
+        update() {
+            let newData = {
+                name: this.form.name,
+                username: this.form.username,
+                email: this.form.email,
+                img: this.form.img
+            };
+            var url = this.$api + '/users/' + this.editId;
+            this.load = true;
+            this.$http.put(url, newData, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(response => {
+                localStorage.setItem('name',response.data.data.name);
+                this.error_message = response.data.message;
+                this.color = "green";
+                this.snackbar = true;
+                this.load = false;
+                this.readData(); //Baca data
+                this.dialog = false;
+                location.reload()
+            }).catch(error => {
+                this.error_message = error.response.data.message;
+                this.color = "red";
+                this.snackbar = true;
+                this.load = false;
+            });
+        },cancel(){
+            this.resetForm();
+            this.readData();
+            this.dialog = false;
+        },
+        resetForm() {
+            this.form = {
+                username: null,
+                name: null,
+                email: null,
+                img: null
+            };
+        },
+    },
+
+
+    computed:{
+        getName(){
+            return localStorage.getItem('name')
+        }
     },
 
     beforeMount(){
