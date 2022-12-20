@@ -115,46 +115,47 @@
         </div>
 
         <v-dialog v-model="dialog" persistent max-width="600px">
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">{{ formTitle }} Supplier</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-text-field
-                                v-model="form.name"
-                                label="Name"
-                                required
-                            >
-                            </v-text-field>
-                            <v-text-field
-                                v-model="form.username"
-                                label="Username"
-                                required
-                            >
-                            </v-text-field>
-                            <v-text-field
-                                v-model="form.email"
-                                label="E-Mail"
-                                required
-                            >
-                            </v-text-field>
-                            <v-text-field
-                                v-model="form.img"
-                                label="URL Gambar"
-                            >
-                            </v-text-field>
-                            
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="cancel"> Cancel </v-btn>
-                        <v-btn color="blue darken-1" text @click="update"> Save </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-
+            <v-card>
+                <v-card-title>
+                    <span class="headline">{{ formTitle }} Supplier</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-text-field
+                            v-model="form.name"
+                            label="Name"
+                            required
+                        >
+                        </v-text-field>
+                        <v-text-field
+                            v-model="form.username"
+                            label="Username"
+                            required
+                        >
+                        </v-text-field>
+                        <v-text-field
+                            v-model="form.email"
+                            label="E-Mail"
+                            required
+                        >
+                        </v-text-field>
+                        <v-text-field
+                            v-model="form.img"
+                            label="URL Gambar"
+                        >
+                        </v-text-field>
+                        
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="cancel"> Cancel </v-btn>
+                    <v-btn color="blue darken-1" text @click="update"> Save </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        
+        <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>{{ error_message }}</v-snackbar>
     </section>
 </template>
 
@@ -243,12 +244,6 @@ export default{
         },
     },
 
-
-    computed:{
-        getName(){
-            return localStorage.getItem('name')
-        }
-    },
 
     beforeMount(){
         this.id = localStorage.getItem('id');

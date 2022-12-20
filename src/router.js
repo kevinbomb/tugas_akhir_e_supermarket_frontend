@@ -25,6 +25,16 @@ const router = new VueRouter({
                     component: () => import('@/views/User/UserPage.vue'),
                 },
                 {
+                    path: "/barang",
+                    name: "barang.index",
+                    component: () => import('@/views/Barang/BarangPage.vue'),
+                },
+                {
+                    path: "/belibarang",
+                    name: "barang.beli",
+                    component: () => import('@/views/Barang/BeliBarang.vue'),
+                },
+                {
                     path: "/profile",
                     name: "myprofile",
                     component: () => import('@/components/ProfilePage.vue'),
