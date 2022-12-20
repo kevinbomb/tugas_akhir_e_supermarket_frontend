@@ -28,7 +28,7 @@
                         <p v-else>Sold Out</p>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">    
-                        <v-btn v-if="item.in_stok===1" class="ma-2" outlined small color="error" >BELI</v-btn>
+                        <v-btn v-if="item.in_stok===1" class="ma-2" outlined small color="error" @click="buyHandler(item)">BELI</v-btn>
                         <v-btn v-else class="ma-2" outlined small color="error" disabled >BELI</v-btn>
                     </template>
                 </v-data-table>
@@ -110,6 +110,26 @@
                 </v-card>
             </v-dialog>
 
+            <v-dialog v-model="dialogKuantitas" persistent max-width="500px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline"> Masukkan Jumlah Yang Ingin Dibeli !</span>
+                    </v-card-title>
+                    <v-text-field
+                        v-model="kuantitas.n"
+                        type="number"
+                        required
+                    >
+                    </v-text-field>
+                    <v-card-action>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="cancel"> GA JADI </v-btn>
+                        <v-btn color="blue darken-1" text @click="setForm"> BELI </v-btn>
+                    </v-card-action>
+                </v-card>
+            </v-dialog>
+
+
             <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>{{ error_message }}</v-snackbar>
         </v-main>
     </section>
@@ -128,6 +148,7 @@ export default {
             search: null,
             dialog: false,
             dialogConfirm: false,
+            dialogKuantitas: false,
             Stok:[
                 {
                     text: 'Available',
@@ -140,7 +161,7 @@ export default {
             ],
             headers: [
                 {
-                    text: "Img",
+                    text: "Foto Produk",
                     align: "start",
                     sortable: true,
                     value: "img",
@@ -162,6 +183,9 @@ export default {
                 expired: null,
                 supplier: null,
             },
+            kuantitas: {
+                n: null,
+            },
             deleteId: '',
             editId: '',
         };
@@ -169,8 +193,10 @@ export default {
 
     methods: {
         setForm(){
-            if(this.inputType !== 'Tambah'){
+            if(this.inputType === 'Ubah'){
                 this.update();
+            }else if(this.inputType === 'Beli' ){
+                this.keranjang();
             }else{
                 this.save();
             }
@@ -210,6 +236,38 @@ export default {
             var url = this.$api + '/barangs'
             this.load = true;
             this.$http.post(url, this.barang, {
+                headers: {
+                    'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                }
+            }).then(response => {
+                this.error_message = response.data.message;
+                this.color = "green";
+                this.snackbar = true;
+                this.load = true;
+                this.close();
+                this.readData(); //Baca data
+                this.resetForm();
+            }).catch(error => {
+                this.error_message = error.response.data.message;
+                this.color = "red";
+                this.snackbar = true;
+                this.load = false;
+            });
+        },
+
+        //Simpan data keranjang
+        keranjang(){
+            let newData = {              
+                nama_barang : this.nama_barang,
+                harga : this.harga,
+                jumlah : this.kuantitas.n,
+                user_id : this.id,
+                status : 0,
+            };
+
+            var url = this.$api + '/keranjangs'
+            this.load = true;
+            this.$http.post(url, newData, {
                 headers: {
                     'Authorization' : 'Bearer ' + localStorage.getItem('token'),
                 }
@@ -295,6 +353,13 @@ export default {
             this.form.supplier = item.supplier_id,
             this.dialog = true;
         },
+        buyHandler(item) {
+            this.inputType = 'Beli';
+            this.editId = item.id;
+            this.nama_barang = item.nama_barang;
+            this.harga=item.harga;
+            this.dialogKuantitas = true;
+        },
         deleteHandler(id) {
             this.deleteId = id;
             this.dialogConfirm = true;
@@ -303,6 +368,7 @@ export default {
             this.dialog = false;
             this.inputType = 'Tambah';
             this.dialogConfirm = false;
+            this.dialogKuantitas= false;
             this.readData();
         },
         cancel(){
@@ -310,6 +376,7 @@ export default {
             this.readData();
             this.dialog = false;
             this.dialogConfirm = false;
+            this.dialogKuantitas = false;
             this.inputType = 'Tambah';
         },
         resetForm() {

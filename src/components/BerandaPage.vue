@@ -27,6 +27,12 @@
                         <li v-else class="nav-item">
                             <router-link :to="{name: 'barang.beli'}" class="nav-link">Barang</router-link>
                         </li>
+                        <li v-if="name!='Super Admin'" class="nav-item">
+                            <router-link :to="{name: 'keranjang.ku'}" class="nav-link">Keranjang</router-link>
+                        </li>
+                        <li v-else class="nav-item">
+                            <router-link :to="{name: 'transaksi.index'}" class="nav-link">Transaksi</router-link>
+                        </li>
                     </ul>
                 </div>
             </nav>

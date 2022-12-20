@@ -141,7 +141,7 @@ export default {
             ],
             headers: [
                 {
-                    text: "Img",
+                    text: "Foto Produk",
                     align: "start",
                     sortable: true,
                     value: "img",
@@ -285,7 +285,8 @@ export default {
                 this.snackbar = true;
                 this.load = false;
             });
-        },editHandler(item) {
+        },
+        editHandler(item) {
             this.inputType = 'Ubah';
             this.editId = item.id;
             this.form.nama_barang = item.nama_barang;

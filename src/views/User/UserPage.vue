@@ -19,7 +19,7 @@
 
                 <v-data-table :headers="headers" :items="users" :search="search">
                     <template v-slot:[`item.status`]="{ item }">    
-                        <p v-if="item.is_active===1">Authenticated</p>
+                        <p v-if="item.email_verified_at!== null">Authenticated</p>
                         <p v-else>Unauthenticated</p>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">    

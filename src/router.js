@@ -35,6 +35,16 @@ const router = new VueRouter({
                     component: () => import('@/views/Barang/BeliBarang.vue'),
                 },
                 {
+                    path: "/keranjangku",
+                    name: "keranjang.ku",
+                    component: () => import('@/views/Keranjang/KeranjangKu.vue'),
+                },
+                {
+                    path: "/transaksi",
+                    name: "transaksi.index",
+                    component: () => import('@/views/Keranjang/KeranjangPage.vue'),
+                },
+                {
                     path: "/profile",
                     name: "myprofile",
                     component: () => import('@/components/ProfilePage.vue'),
