@@ -18,7 +18,7 @@
 
                 <v-data-table :headers="headers" :items="keranjangs" :search="search">
                     <template v-slot:[`item.status`]="{ item }">    
-                        <p v-if="item.status===1">Diproses</p>
+                        <p v-if="item.status=='1'">Diproses</p>
                         <p v-else>Menunggu Pembayaran</p>
                     </template>
                     <template v-slot:[`item.total`]="{ item }">

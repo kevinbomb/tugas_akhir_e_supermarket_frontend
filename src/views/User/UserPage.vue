@@ -14,7 +14,6 @@
                     >
                     </v-text-field>
                     <v-spacer></v-spacer>
-                    <v-btn color="success" dark @click="dialog = true"> Tambah </v-btn>
                 </v-card-title>
 
                 <v-data-table :headers="headers" :items="users" :search="search">

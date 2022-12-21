@@ -24,11 +24,11 @@
                         </div>
                     </template>
                     <template v-slot:[`item.in_stok`]="{ item }">    
-                        <p v-if="item.in_stok===1">Available</p>
-                        <p v-else>Sold Out</p>
+                        <p v-if="item.in_stok=='1'">Available</p>
+                        <p v-else>Sold-Out</p>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">    
-                        <v-btn v-if="item.in_stok===1" class="ma-2" outlined small color="error" @click="buyHandler(item)">BELI</v-btn>
+                        <v-btn v-if="item.in_stok=='1'" class="ma-2" outlined small color="error" @click="buyHandler(item)">BELI</v-btn>
                         <v-btn v-else class="ma-2" outlined small color="error" disabled >BELI</v-btn>
                     </template>
                 </v-data-table>

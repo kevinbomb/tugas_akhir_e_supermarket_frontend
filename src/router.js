@@ -63,12 +63,6 @@ const router = new VueRouter({
             component: () => import('@/components/RegisterPage.vue'),
         },
         {
-            path: '/tes1',
-            name: 'DashboardIndex',
-            component: () => import('@/components/DashboardIndex.vue'),
-        },
-
-        {
             path: '/',
             redirect: '/login'
         },

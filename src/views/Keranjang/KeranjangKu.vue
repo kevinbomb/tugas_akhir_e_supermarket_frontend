@@ -18,7 +18,7 @@
 
                 <v-data-table :headers="headers" :items="keranjangs" :search="search">
                     <template v-slot:[`item.status`]="{ item }">    
-                        <p v-if="item.status===1">Diproses</p>
+                        <p v-if="item.status=='1'">Diproses</p>
                         <p v-else>Menunggu Pembayaran</p>
                     </template>
                     <template v-slot:[`item.total`]="{ item }">
@@ -27,7 +27,7 @@
                         </p>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">    
-                        <v-btn v-if="item.status===0" class="ma-2" outlined small color="error" @click="bayar(item.id)" >BAYAR</v-btn>
+                        <v-btn v-if="item.status=='0'" class="ma-2" outlined small color="error" @click="bayar(item.id)" >BAYAR</v-btn>
                         <v-btn v-else class="ma-2" outlined small color="error" disabled >BAYAR</v-btn>
                         <v-btn class="ma-2" outlined small color="black" @click="deleteHandler(item.id)">REMOVE</v-btn>
                     </template>

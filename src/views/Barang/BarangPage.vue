@@ -24,8 +24,8 @@
                         </div>
                     </template>
                     <template v-slot:[`item.in_stok`]="{ item }">    
-                        <p v-if="item.in_stok===1">Available</p>
-                        <p v-else>Sold Out</p>
+                        <p v-if="item.in_stok=='1'">Available</p>
+                        <p v-else>Sold-Out</p>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">    
                         

@@ -24,7 +24,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios;
-Vue.prototype.$api = 'http://127.0.0.1:8000/api';
+Vue.prototype.$api = 'https://tokomputer.com/api/Tugas_Akhir_E_Supermarket_Backend/public/api';
 
 new Vue({
   vuetify,
